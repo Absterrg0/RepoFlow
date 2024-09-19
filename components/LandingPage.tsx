@@ -148,57 +148,58 @@ export default function HomePage() {
     >
       <Toaster position="bottom-right" />
       <header className="bg-black bg-opacity-50 backdrop-blur-md shadow-lg py-6 sticky top-0 z-10">
-        <div className="container mx-auto px-4 flex justify-between items-center">
-          <motion.h1
-            initial={{ x: -20, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="text-4xl font-bold text-white"
+  <div className="container mx-auto px-4 flex flex-wrap justify-between items-center">
+    <motion.h1
+      initial={{ x: -20, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="text-4xl font-bold text-white"
+    >
+      RepoFlow
+    </motion.h1>
+    <div className="flex items-center space-x-4 mt-4 sm:mt-0 flex-wrap justify-center">
+      {status === 'authenticated' ? (
+        <>
+          <Button
+            onClick={() => setIsApprovalModalOpen(true)}
+            variant="outline"
+            className="flex items-center gap-2 text-white border-white hover:bg-white hover:text-black transition-colors duration-300"
           >
-            RepoFlow
-          </motion.h1>
-          <div className="flex items-center space-x-4">
-            {status === 'authenticated' ? (
-              <>
-                <Button
-                  onClick={() => setIsApprovalModalOpen(true)}
-                  variant="outline"
-                  className="flex items-center gap-2 text-white border-white hover:bg-white hover:text-black transition-colors duration-300"
-                >
-                  <Plus className="mr-2" size={18} />
-                  Awaiting Approval
-                </Button>
-                <Button
-                  onClick={() => signOut()}
-                  variant="destructive"
-                  className="flex items-center gap-2 bg-red-600 hover:bg-red-700 transition-colors duration-300"
-                >
-                  <LogOut size={16} />
-                  Logout
-                </Button>
-              </>
-            ) : (
-              <Button
-                onClick={() => signIn('github')}
-                variant="outline"
-                className="flex items-center gap-2 text-white border-white hover:bg-white hover:text-black transition-colors duration-300"
-              >
-                <Github size={16} />
-                Login with GitHub
-              </Button>
-            )}
-            <a
-              href="https://github.com/Absterrg0"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-white hover:text-gray-300 transition-colors duration-300"
-            >
-              <Github size={20} />
-              Contribute
-            </a>
-          </div>
-        </div>
-      </header>
+            <Plus className="mr-2" size={18} />
+            Awaiting Approval
+          </Button>
+          <Button
+            onClick={() => signOut()}
+            variant="destructive"
+            className="flex items-center gap-2 bg-red-600 hover:bg-red-700 transition-colors duration-300"
+          >
+            <LogOut size={16} />
+            Logout
+          </Button>
+        </>
+      ) : (
+        <Button
+          onClick={() => signIn('github')}
+          variant="outline"
+          className="flex items-center gap-2 text-white border-white hover:bg-white hover:text-black transition-colors duration-300"
+        >
+          <Github size={16} />
+          Login with GitHub
+        </Button>
+      )}
+      <a
+        href="https://github.com/Absterrg0"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 text-white hover:text-gray-300 transition-colors duration-300"
+      >
+        <Github size={20} />
+        Contribute
+      </a>
+    </div>
+  </div>
+</header>
+
 
       <main className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
@@ -265,7 +266,7 @@ export default function HomePage() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.8 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6"
           >
             <AnimatePresence>
               {filteredRepos.map((repo) => (
@@ -331,7 +332,7 @@ export default function HomePage() {
       </main>
 
       <Dialog open={isAddRepoModalOpen} onOpenChange={() => setIsAddRepoModalOpen(false)}>
-        <DialogContent className="bg-gray-900 rounded-lg p-6 max-w-md">
+        <DialogContent className="bg-gray-900 rounded-lg p-6 max-w-md mx-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-white">Add Repository</DialogTitle>
             <DialogDescription className="text-gray-400">Fill in the repository details below.</DialogDescription>
@@ -402,7 +403,7 @@ export default function HomePage() {
       </Dialog>
 
       <Dialog open={isApprovalModalOpen} onOpenChange={() => setIsApprovalModalOpen(false)}>
-        <DialogContent className="bg-gray-900 rounded-lg p-6 max-w-2xl">
+        <DialogContent className="bg-gray-900 rounded-lg p-6 max-w-2xl mx-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-white">Repositories Awaiting Approval</DialogTitle>
             <DialogDescription className="text-gray-400">Below are the repositories that need approval.</DialogDescription>
