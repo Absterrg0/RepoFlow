@@ -18,6 +18,7 @@ export async function POST(req: Request) {
   }
 
   try {
+    // Update the repository to set isApproved to true
     const updatedRepo = await client.repository.update({
       where: { id: repoId },
       data: { isApproved: true },

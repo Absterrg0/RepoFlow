@@ -5,7 +5,7 @@ declare module 'next-auth' {
   interface User extends DefaultUser {
     id: number;
     username: string;
-    isAdmin?: boolean;  // Optional if you want to make it non-mandatory
+    isAdmin?: boolean;
   }
 
   interface Session {
@@ -14,6 +14,7 @@ declare module 'next-auth' {
       username: string;
       isAdmin?: boolean;
     } & DefaultSession["user"];
+    accessToken?: string;  // Add accessToken to Session
   }
 }
 
@@ -21,6 +22,7 @@ declare module 'next-auth/jwt' {
   interface JWT extends NextAuthJWT {
     id: number;
     username: string;
-    isAdmin?: boolean;  // Optional if you want to make it non-mandatory
+    isAdmin?: boolean;
+    accessToken?: string;  // Add accessToken to JWT
   }
 }

@@ -8,23 +8,26 @@ generator client {
 }
 
 model User {
-  id          Int       @id @default(autoincrement())
-  username    String    @unique
-  isAdmin     Boolean   @default(false)
+  id          Int          @id @default(autoincrement())
+  username    String       @unique
+  isAdmin     Boolean      @default(false)
   repositories Repository[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
 
 model Repository {
-  id          Int       @id @default(autoincrement())
-  name        String    @unique
-  description String?
-  url         String    @unique
-  isApproved  Boolean   @default(false)
+  id          Int          @id @default(autoincrement())
+  name        String       @unique
+  description String?      // Optional description
+  url         String       @unique
+  isApproved  Boolean      @default(false)
   userId      Int
-  user        User      @relation(fields: [userId], references: [id])
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  techStack   String[]
+  user        User         @relation(fields: [userId], references: [id])
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  techStack   String[]     // Array of strings for tech stack
+  stars       Int?         // Optional field for stars count
+  forks       Int?         // Optional field for forks count
+  language    String?      // Optional field for language
 }

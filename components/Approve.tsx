@@ -8,8 +8,16 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { AlertCircle } from 'lucide-react'
-import { Repository } from '@/validate/types'
-
+interface Repository {
+    id: number
+    name: string
+    description: string
+    url: string
+    techStack: string[]
+    stars: number
+    forks: number
+  }
+  
 export default function Approval() {
   const { data: session, status } = useSession()
   const [awaitingApprovalRepos, setAwaitingApprovalRepos] = useState<Repository[]>([])

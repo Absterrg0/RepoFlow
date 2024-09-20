@@ -1,7 +1,7 @@
 import client from "@/db";
 import authValues from "@/lib/auth";
 import { getServerSession } from "next-auth";
-import {  NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export async function GET() {
     const session = await getServerSession(authValues);
@@ -19,7 +19,16 @@ export async function GET() {
                 user: {
                     username: session.user.name!,
                 },
-                isApproved:false
+                isApproved: false,
+            },
+            select: {
+                id: true,
+                name: true,
+                description: true,
+                url: true,
+                techStack: true,
+                language: true,
+                isApproved: true,
             },
         });
 

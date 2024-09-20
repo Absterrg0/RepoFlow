@@ -55,19 +55,23 @@ export async function POST(req: NextRequest) {
             });
         }
 
-        // Create repository with default approval status as false
-        const repository = await client.repository.create({
-            data: {
-                name: body.name,
-                description: body.description,
-                url: body.url,
-                techStack:body.techStack,
-                userId: user.id,
-                isApproved: false, // Default value indicating that the repository needs approval
-            },
-        });
+        // Handle both single repository and array of repositories
+        const repositories = Array.isArray(body) ? body : [body];
 
-        return NextResponse.json(repository);
+        const createdRepositories = await Promise.all(repositories.map(async (repo) => {
+            return client.repository.create({
+                data: {
+                    name: repo.name,
+                    description: repo.description,
+                    url: repo.url,
+                    techStack: repo.techStack,
+                    userId: user.id,
+                    isApproved: false, // Default value indicating that the repository needs approval
+                },
+            });
+        }));
+
+        return NextResponse.json(createdRepositories);
     } catch (error) {
         console.error('Error creating repository:', error);
         return NextResponse.json({
