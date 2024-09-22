@@ -231,11 +231,11 @@ const handleBookmark = async (id: number) => {
       <Toaster position="top-right" />
       <Sidebar 
         onUnbookmark={unbookmarkRepository}
-        className='top-20' 
+        className=' z-50 '
         bookmarkedRepos={bookmarkedRepos} 
       />
       <div>
-        <header className="bg-black bg-opacity-50 backdrop-blur-md shadow-lg py-7 sticky top-0 z-40">
+        <header className="bg-black bg-opacity-50 backdrop-blur-md shadow-lg py-6 sticky top-0 z-40">
           <div className="container mx-auto px-4 flex flex-wrap justify-between items-center">
             <motion.div
               initial={{ x: -20, opacity: 0 }}
