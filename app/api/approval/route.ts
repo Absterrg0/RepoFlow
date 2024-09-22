@@ -5,7 +5,6 @@ import { authValues } from '@/lib/auth'; // Adjust import path based on your Nex
 
 export async function POST(req: Request) {
   const session = await getServerSession(authValues);
-  console.log(session?.user)
 
   if (!session || !session.user?.isAdmin) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 403 });

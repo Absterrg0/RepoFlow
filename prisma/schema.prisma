@@ -14,6 +14,7 @@ model User {
   repositories Repository[]
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
+  bookmarks   BookMarks[]
 }
 
 model Repository {
@@ -30,4 +31,18 @@ model Repository {
   stars       Int?         // Optional field for stars count
   forks       Int?         // Optional field for forks count
   language    String?      // Optional field for language
+  bookmarks   BookMarks[]
+
+}
+
+model BookMarks{
+  id                    Int         @id@default(autoincrement())
+  userId                Int
+  repositoryId          Int
+  user                  User        @relation(fields: [userId],references: [id])
+  repository            Repository  @relation(fields: [repositoryId],references: [id])
+    createdAt           DateTime    @default(now())
+
+  @@unique([userId, repositoryId])
+
 }

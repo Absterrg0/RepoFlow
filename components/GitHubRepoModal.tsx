@@ -49,7 +49,7 @@ export default function GitHubRepoSelectionModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[700px] bg-gray-900 text-white shadow-lg rounded-lg">
+      <DialogContent className="sm:max-w-[700px] bg-zinc-900 text-white shadow-lg rounded-lg">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">Select GitHub Repositories</DialogTitle>
         </DialogHeader>
@@ -68,7 +68,7 @@ export default function GitHubRepoSelectionModal({
               {filteredRepos.map((repo) => (
                 <div
                   key={repo.id}
-                  className="flex items-start space-x-3 rounded-lg border border-zinc-700 p-3 transition-colors hover:bg-gray-600 bg-gray-850"
+                  className="flex items-start space-x-3 rounded-lg border border-zinc-700 p-3 transition-colors hover:bg-gray-600 bg-zinc-700"
                 >
                   <Checkbox
                     id={`repo-${repo.id}`}
