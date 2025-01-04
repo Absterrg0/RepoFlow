@@ -77,7 +77,6 @@ export default function HomePage() {
       setRepositories(response.data);
     } catch (error) {
       console.error('Error fetching repositories:', error);
-      toast.error('Failed to fetch repositories. Please try again.');
     }
   };
 
@@ -88,7 +87,6 @@ export default function HomePage() {
         setAwaitingApprovalRepos(response.data);
       } catch (error) {
         console.error('Error fetching awaiting approval repositories:', error);
-        toast.error('Failed to fetch awaiting approval repositories. Please try again.');
       }
     }
   };
@@ -183,9 +181,10 @@ const handleBookmark = async (id: number) => {
   };
 
   useEffect(() => {
-    fetchRepositories();
     fetchAwaitingApprovalRepos();
     if (session) fetchGithubRepos();
+    fetchRepositories();
+
     fetchBookmarks(); // Fetch bookmarks on mount
   }, [session]);
 
