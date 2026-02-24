@@ -3,14 +3,14 @@ import client from '@/db'
 import { getServerSession } from 'next-auth';
 import authValues from '@/lib/auth';
 
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
     const session = await getServerSession(authValues)
     if(!session){
         return NextResponse.json({
             msg:"Unauthorized"
         })
     }
-  const { id } = params;
+  const { id } = await params;
 
   try {
     // Delete the bookmark from the database

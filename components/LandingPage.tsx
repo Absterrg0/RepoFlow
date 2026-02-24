@@ -71,16 +71,16 @@ export default function HomePage() {
   const [isAddRepoModalOpen, setIsAddRepoModalOpen] = useState(false);
   const [bookmarkedRepos, setBookmarkedRepos] = useState<Repository[]>([]);
 
-  const fetchRepositories = async () => {
+  const fetchRepositories = useCallback(async () => {
     try {
       const response = await axios.get<Repository[]>('/api/repos');
       setRepositories(response.data);
     } catch (error) {
       console.error('Error fetching repositories:', error);
     }
-  };
+  }, []);
 
-  const fetchAwaitingApprovalRepos = async () => {
+  const fetchAwaitingApprovalRepos = useCallback(async () => {
     if (session) {
       try {
         const response = await axios.get<Repository[]>('/api/repos/awaiting-approval');
@@ -89,7 +89,7 @@ export default function HomePage() {
         console.error('Error fetching awaiting approval repositories:', error);
       }
     }
-  };
+  }, [session]);
    const unbookmarkRepository = async (id : number) => {
     try {
       await axios.delete(`/api/repos/bookmarks/${id}`);
@@ -103,7 +103,7 @@ export default function HomePage() {
   };
   
 
-  const fetchGithubRepos = async () => {
+  const fetchGithubRepos = useCallback(async () => {
     if (session?.accessToken) {
       try {
         const response = await axios.get<GitHubRepo[]>('https://api.github.com/user/repos', {
@@ -122,7 +122,7 @@ export default function HomePage() {
         toast.error('Failed to fetch GitHub repositories. Please try again.');
       }
     }
-  };
+  }, [session]);
   const fetchBookmarks = useCallback(async () => {
     try {
       const response = await axios.get<Bookmark[]>('/api/repos/bookmarks');
@@ -184,9 +184,8 @@ const handleBookmark = async (id: number) => {
     fetchAwaitingApprovalRepos();
     if (session) fetchGithubRepos();
     fetchRepositories();
-
-    fetchBookmarks(); // Fetch bookmarks on mount
-  }, [session]);
+    fetchBookmarks();
+  }, [session, fetchAwaitingApprovalRepos, fetchGithubRepos, fetchRepositories, fetchBookmarks]);
 
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
