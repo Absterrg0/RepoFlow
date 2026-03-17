@@ -12,32 +12,30 @@ export const authValues: NextAuthOptions = {
   callbacks: {
     async jwt({ token, account, profile }) {
       if (account && profile) {
-        const username = profile.name as string;
+        const ghProfile = profile as unknown as {
+          login?: string;
+          name?: string | null;
+        };
 
-        // Fetch user details from the database
-        const dbUser = await client.user.findUnique({
-          where: { username: username },
-        });
+        // GitHub `login` is stable + unique; `name` is optional and not unique.
+        const username = ghProfile.login ?? token.sub ?? ghProfile.name ?? undefined;
+        if (!username) return token;
 
-        if (dbUser) {
+        try {
+          const dbUser = await client.user.upsert({
+            where: { username },
+            update: {},
+            create: { username },
+          });
+
           token.id = dbUser.id;
           token.username = dbUser.username;
           token.isAdmin = dbUser.isAdmin;
-        } else {
-          // If the user doesn't exist, create a new user in the database
-          const newUser = await client.user.create({
-            data: {
-              username: username,
-            },
-          });
-
-          token.id = newUser.id;
-          token.username = newUser.username;
-          token.isAdmin = newUser.isAdmin;
+          token.accessToken = account.access_token;
+        } catch (e) {
+          // If DB operations fail, don't crash the OAuth callback.
+          console.error("NextAuth jwt callback DB error:", e);
         }
-
-        // Store the accessToken from the account object
-        token.accessToken = account.access_token;
       }
       return token;
     },
