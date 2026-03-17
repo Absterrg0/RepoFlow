@@ -1,5 +1,13 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## GitHub OAuth Setup
+
+For GitHub sign-in to work, create an OAuth App at [GitHub Developer Settings](https://github.com/settings/developers):
+
+1. **Authorization callback URL** must be exactly: `http://localhost:3000/api/auth/callback/github` (or your production URL + `/api/auth/callback/github`)
+2. Set `GITHUB_ID` and `GITHUB_SECRET` in your `.env` from the OAuth App
+3. Ensure `NEXTAUTH_URL` matches your app URL (no trailing slash)
+
 ## Getting Started
 
 First, run the development server:

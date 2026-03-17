@@ -266,7 +266,7 @@ const handleBookmark = async (id: number) => {
                 </>
               ) : (
                 <Button
-                  onClick={() => signIn('github')}
+                  onClick={() => signIn('github', { callbackUrl: '/' })}
                   variant="outline"
                   className="flex items-center gap-2 text-white border-white hover:bg-white hover:text-black transition-colors duration-300"
                 >
